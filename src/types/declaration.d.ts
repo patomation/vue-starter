@@ -9,3 +9,7 @@ declare module '*.woff2'
 declare module '*.ttf'
 declare module '*.wav'
 declare module '*.mp3'
+declare module '*.vue' {
+  import Vue from 'vue'
+  export default Vue
+}
