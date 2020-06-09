@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const { titleCase } = require('title-case')
 const pkg = require('./package.json')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   entry: './src/index.ts',
@@ -21,6 +22,7 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
+          'vue-style-loader',
           'style-loader', // creates style nodes from JS strings
           'css-loader', // translates CSS into CommonJS
           'sass-loader' // compiles Sass to CSS, using Node Sass by default
@@ -29,6 +31,10 @@ module.exports = {
       {
         test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.eot$|\.woff$|\.woff2$|\.ttf$|\.wav$|\.mp3$/,
         loader: 'file-loader?name=[name].[ext]' // Keeps original file name
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
       }
     ]
   },
@@ -44,7 +50,8 @@ module.exports = {
       title: titleCase(pkg.name.replace('-', ' ')),
       template: './public/index.html',
       filename: './index.html'
-    })
+    }),
+    new VueLoaderPlugin()
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
